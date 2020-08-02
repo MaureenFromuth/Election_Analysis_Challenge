@@ -60,7 +60,7 @@ with open(file_to_load) as election_data:
 - **Question: Provide a breakdown of the number of votes and the percentage of total votes for each county in the precinct.**
 
         Answer: Jefferson: 10.5% (38,855); Denver: 82.8% (306,055); Arapahoe: 6.7% (24,801)
-To assess the overall particpation of each county, we utilized created one list, one dictionary, and 3 new variables.  The list established the name of the counties that there were ballots cast, whereas the dictionary established the number of votes per county (key).  The three remaining variables identified the county with the largest turn out, the number of votes in that county, and the percentage of overall votes that county had.  Employing a conditional statement within a for loop that reviewed each row, the code looks for a county not alreaedy in the county names list.  If it is a new county, the code appends the count names list and adds that name, setting the count of votes from that county equal to 0.  Outside of the conditional statement but within the same for loop, every time a county appears on a row another count is added to the total number of ballots from that county.  This gives us the names of all the counties from which we had votes as well as the total number of ballots per county.   
+To assess the overall particpation of each county, we utilized created one list, one dictionary, and 3 new variables.  The list established the name of the counties that there were ballots cast, whereas the dictionary established the number of votes per county (key).  The three remaining variables identified the county with the largest turn out, the number of votes in that county, and the percentage of overall votes that county had.  Employing a conditional statement within a for loop that reviewed each row, the code looks for a county not alreaedy in the county names list.  If it is a new county, the code appends the count names list and adds that name, setting the count of votes from that county equal to 0.  Outside of the conditional statement but within the same for loop, every time a county appears on a row another count is added to the total number of ballots from that county.  This gives us the names of all the counties from which we had votes as well as the information needed for the dictionary pairing total number of ballots to the county (key).   
 ```
 #Establish a list for all the counties from which a vote came from
 county_list = []
@@ -95,6 +95,19 @@ with open(file_to_load) as election_data:
         
         #For every row in which you see that count name, add a vote to that county's vote count.
         county_votes[county_name] +=1
+```
+
+Once these new lists are appended and counted, we used another for loop to consolidate the number of votes per county as well as calculate the percentage of the overall vote that county was responsible for.  The for loop, the code goes through each of the counties (row/key) in the dictionary and pulls out the total count.  Combining this information with the total votes in question one, the code calculates the percentage of votes from each county.
+
+```
+    #Goes through each row of the dictionary pairing votes to counties, as calculated above
+    for county_name in county_votes:
+
+        # Gets the name of every county (row/key) and gets the votes (variable) associated with that key
+        county_ballots = county_votes.get(county_name)
+
+        #For each county in the dictionary, converts the number of ballots and total votes to float and then calculates the percentage 
+        county_percentage = float(county_ballots) / float(total_votes) * 100
 ```
 
 - **Question: Which county had the largest number of votes?**
