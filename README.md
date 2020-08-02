@@ -208,9 +208,17 @@ Using the nested conditional approach listed in Question 3, we use a loop to go 
 ```
 
 ## Summary
+Assuming each county's data has the same or similar structure, this code can be reused for multiple elections.  There are a few key areas you would need to update or change in order for this to occur, however.  The first would be the location of the data you are loading to review and the location of the data that you would write the results to.  Using the OS module path.join feature, you would need to assign the location of the new data as well as identify the location of your output text file.  Furthermore, you need to identify that the rows and headers are in the same order.  If not, you can either adjust the results data or you can adjust the code to look at the appropriate row (e.g. row 1 is now county).  If there are concurrent elections and all the data is co-lotated into one results tabular data sheet, you would need to add additional indexes to associated specific counties to a particular election. 
 
-how can be used for other Elections
+To identify more specific examples of how to resuse this code, let's look at two different scenarios: same data new election and district; different data same election and district.  
 
-2 examples
- - switch out names/counties (if data is the same; need to change out the location of the data in the file_to_load)
- - switch out the attribute assessing (create new variables similar to that of name and county, but create new row)
+First, let's look at a new election using the same data structure but for an election with different candidates and different counties.  In this case, you would only need to change the location and name of the files you are loading for analysis and the output file.  See below for an example.
+```
+# Add a variable to load a file from a path.
+file_to_load = os.path.join("ADD NEW NAME OF ELECTION DATA HERE.csv")
+
+# Add a variable to save the file to a path.
+file_to_save = os.path.join("ADD NEW NAME OF OUTPUT OF ELECTION ANALYSIS HERE.txt")
+```
+
+Another example is if we get an additional attribute or column (e.g. voter age range) per ballot for the exact same election and the exact same district.  If, Tom and Seth are now interested in understanding the age demographics of the voters (e.g. 18-30, 30-50, 50+), you can employ the exact same approach as we did with counties and candidates to assess the age group with the largest turn out.  More specifically, you first establish a list of age groups, and establish a dictionary that assigns votes (variables) to the age groups (keys). Using a for loop, you go through each of the votes (rows) in the newly updated election data, adding age groups to the possible age group list and adding one more count for each age group the program comes across.  Using another for loop but this time within the list of age groups, you get the total votes for each age group and use that data to calculate the percentage of votes each age group received.  Finally, using a nested conditional statement within that same loop, you look for age groups with more votes and a higher percentage of the overall votes than the existing 'winner'.  For any age group higher, replace the fields for the respective variables.
