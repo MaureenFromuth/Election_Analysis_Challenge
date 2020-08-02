@@ -31,7 +31,7 @@ To conduct analysis we used Jupyter Notebook as an IDE and Python 3.7.6 for a co
 ![Congressional Election Results and Participation](https://github.com/MaureenFromuth/Election_Analysis_Challenge/blob/master/Election_Results-Text.png)
 
 
-- **Question: How many votes were cast in this congressional election?**
+- **Question 1: How many votes were cast in this congressional election?**
 
         Answer: 376,711
 
@@ -57,12 +57,12 @@ with open(file_to_load) as election_data:
         total_votes = total_votes + 1
 ```
 
-- **Question: Provide a breakdown of the number of votes and the percentage of total votes for each county in the precinct.**
+
+- **Question 2: Provide a breakdown of the number of votes and the percentage of total votes for each county in the precinct.**
 
         Answer: Jefferson: 10.5% (38,855); Denver: 82.8% (306,055); Arapahoe: 6.7% (24,801)
 
 To assess the overall particpation of each county, we utilized created one list and one dictionary.  The list established the name of the counties that there were ballots cast, whereas the dictionary established the number of votes per county (key).  
-
 ```
 #Establish a list for all the counties from which a vote came from
 county_list = []
@@ -72,7 +72,6 @@ county_votes = {}
 ```
 
 Employing a conditional statement within a for loop that reviewed each row, the code looks for a county not alreaedy in the county names list.  If it is a new county, the code appends the count names list and adds that name, setting the count of votes from that county equal to 0.  Outside of the conditional statement but within the same for loop, every time a county appears on a row another count is added to the total number of ballots from that county.  This gives us the names of all the counties from which we had votes as well as the information needed for the dictionary pairing total number of ballots to the county (key).   
-
 ```
 with open(file_to_load) as election_data:
     reader = csv.reader(election_data)
@@ -95,7 +94,6 @@ with open(file_to_load) as election_data:
 ```
 
 Once these new lists are appended and counted, we used another for loop to consolidate the number of votes per county as well as calculate the percentage of the overall vote that county was responsible for.  The for loop, the code goes through each of the counties (row/key) in the dictionary and pulls out the total count.  Combining this information with the total votes in question one, the code calculates the percentage of votes from each county.
-
 ```
     #Goes through each row of the dictionary pairing votes to counties, as calculated above
     for county_name in county_votes:
@@ -107,12 +105,12 @@ Once these new lists are appended and counted, we used another for loop to conso
         county_percentage = float(county_ballots) / float(total_votes) * 100
 ```
 
-- **Question: Which county had the largest number of votes?**
+
+- **Question 3: Which county had the largest number of votes?**
 
         Answer: Denver 
 
 We first established the three new variables in order to determine the county with the largest number of votes and therefore the largest voter turn out.  These variables identified the county with the largest turn out, the number of votes in that county, and the percentage of overall votes that county had.  
-
 ```
 #Establish a variable for the name of the county with the largest turnout
 largest_turnout_county = ""
@@ -127,6 +125,8 @@ largest_turnout_percentage = 0
 We then used a nested conditional statement within the loop that looped through the dictionary of counties (row/key) and their total votes (variable).  For each county, the conditional statement looked for two conditions to be true: that county had MORE THAN the county with the existing county with the largest votes AND that county has to have A HIGHER percentage of the total votes that the existing county with the top percentage of turnout.  While mathamatically, the largest turn out should also have the largest percentage, this first conditional statement is a good check that your calculations are accurate.  If those two conditions are met, then the county name, number of votes, and percentage of votes replace the existing values in the three variables above.  You can see which county had the largest participation by printing that variable following the loop. 
 
 ```
+    for county_name in county_votes:
+
         #If a new county has more votes and a larger percentage of the total vote than the existing county, replace the 'largest' variables.
         if (county_ballots > largest_turnout_ballots) and (county_percentage > largest_turnout_percentage):
             largest_turnout_ballots = county_ballots
@@ -137,14 +137,74 @@ We then used a nested conditional statement within the loop that looped through 
     print(largest_turnout_county)
 ```
 
-- **Question: Provide a breakdown of the number of votes and the percentage of the total votes each candidate received.**
+
+- **Question 4: Provide a breakdown of the number of votes and the percentage of the total votes each candidate received.**
+
+        Answer: Charles Casper Stockham: 23.0% (85,213); Diana DeGette: 73.8% (272,892); Raymon Anthony Doane: 3.1% (11,606)
+
+Using the exact same approach and much of the same code as above with counties, we established a list of candidates who received votes and a dictionary pairing together those candidates (key) with the total number of votes they received.
+```
+#Establish a list for all the candidates which received a vote 
+candidate_options = []
+
+#Establish a dictionary for number of votes (key) each candidate received 
+candidate_votes = {}
+```
+
+After opening up the election results data, we wrote a loop that goes through each vote (row), skipping the header.  This loop has a conditional statement within it, much like that of the county analysis above, that looks for a candidates name that is NOT in the list of existing candidate names.  If there is a NEW candidate name, the code appends the candidate list and adds that new name.  At the same time, it also sets the number of votes (variable) assigned to that candidate (key) within the dictionary as 0.  For every time the program runs through a row with a candidate's name, it will add a count to the total number of votes (variable) associated to that candidate (key) in the dictionary.
 
 ```
+    #The conditional statement for each row that looks for if a candidate is NOT in the list of existing candidate names that received a vote 
+    if candidate_name not in candidate_options:
+
+            #If it is NOT in the list, append the list and add the existing canddiate to the list of candidate options
+            candidate_options.append(candidate_name)
+
+            #If it is NOT in the list, begin tracking the candidate's vote count.
+            candidate_votes[candidate_name] = 0
+        
+        #For every row in which you see that candidate's name, add a vote to that candidate's vote count.
+        candidate_votes[candidate_name] += 1
 ```
 
-- **Question: Which candidate won the election, what was their vote count, and what was their percentage of the total votes?**
+Once these new lists are appended and counted, we used another for loop to consolidate the number of votes per candidate as well as calculate the percentage of the overall vote that candidate received.  With the for loop, the program goes through each of the candidates (row/key) in the dictionary and pulls out the total count.  Combining this information with the total votes in question one, the code calculates the percentage of votes for each candidate.
 
 ```
+    #Goes through each row of the dictionary pairing votes to candidates, as calculated above
+    for candidate_name in candidate_votes:
+
+        # Gets the name of every candidate (row/key) and gets the votes (variable) associated with that key
+        votes = candidate_votes.get(candidate_name)
+
+        #For each candidate in the dictionary, converts the number of total votes to float and then calculates the percentage 
+        vote_percentage = float(votes) / float(total_votes) * 100
+```
+
+- **Question 5: Which candidate won the election, what was their vote count, and what was their percentage of the total votes?**
+
+        Answer:  Winner: Diana DeGette; Winning Vote Count: 272,892; Winning Percentage: 73.8%
+
+Yet again, the majority of this code and the approach to building it is the same as that of Question 3.  Much like the analysis of county turn out, we first established three additiohnal variables and set them to 0.  These variables were assigned to the winning candidate, the total number of votes for that winning candidat, and the percentage of overall vote that candidate received.
+```
+#Establish a variable for the winning candidate's name 
+winning_candidate = ""
+
+#Establish a variable for the total number of votes the winning candidate received 
+winning_count = 0
+
+#Establish a variable for the percentage of overall votes the winning candidate received 
+winning_percentage = 0
+```
+
+Using the nested conditional approach listed in Question 3, we use a loop to go through each candidate name within the dictionary and look for candidates that have a higher number of votes and a higher percentage of the overall vote that the candidate currently identified as the 'winner.  If there is a candidate (row/key) that meets both of those conditions, we replace the existing values with the new values for these three variables.
+```
+    for candidate_name in candidate_votes:
+
+        #If a new candidate has more votes and a larger percentage of the total vote than the existing winner, replace the 'winning' variables.
+        if (votes > winning_count) and (vote_percentage > winning_percentage):
+            winning_count = votes
+            winning_candidate = candidate_name
+            winning_percentage = vote_percentage
 ```
 
 ## Summary
