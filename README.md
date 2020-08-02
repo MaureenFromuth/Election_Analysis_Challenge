@@ -32,7 +32,7 @@ Provide a breakdown of the number of votes and the percentage of the total votes
 Which candidate won the election, what was their vote count, and what was their percentage of the total votes?
 
 >**Congressional Election Results and Participation**
-
-![Congressional Election Results and Participation](https://github.com/MaureenFromuth/Election_Analysis_Challenge/blob/master/election_results.txt)
+![Congressional Election Results and Participation](https://github.com/MaureenFromuth/Election_Analysis_Challenge/blob/master/Election_Results-Text.png)
 
 ## Summary
+
