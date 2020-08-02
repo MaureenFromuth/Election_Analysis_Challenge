@@ -111,7 +111,7 @@ Once these new lists are appended and counted, we used another for loop to conso
 
         Answer: Denver 
 
-To determine the county with the largest number of votes and therefore the largest voter turn out, we first established the three new variables.  These variables identified the county with the largest turn out, the number of votes in that county, and the percentage of overall votes that county had.  
+We first established the three new variables in order to determine the county with the largest number of votes and therefore the largest voter turn out.  These variables identified the county with the largest turn out, the number of votes in that county, and the percentage of overall votes that county had.  
 
 ```
 #Establish a variable for the name of the county with the largest turnout
@@ -124,13 +124,17 @@ largest_turnout_ballots = 0
 largest_turnout_percentage = 0
 ```
 
-we used a conditional statement that referenced three additional variables .  This conditional statement was within the loop that looked through the dictionary of counties (row/key) and their total votes (variable).  For each county, the conditional statement looked for two conditions to be true: that county had MORE THAN the existing 
+We then used a nested conditional statement within the loop that looped through the dictionary of counties (row/key) and their total votes (variable).  For each county, the conditional statement looked for two conditions to be true: that county had MORE THAN the county with the existing county with the largest votes AND that county has to have A HIGHER percentage of the total votes that the existing county with the top percentage of turnout.  While mathamatically, the largest turn out should also have the largest percentage, this first conditional statement is a good check that your calculations are accurate.  If those two conditions are met, then the county name, number of votes, and percentage of votes replace the existing values in the three variables above.  You can see which county had the largest participation by printing that variable following the loop. 
 
 ```
+        #If a new county has more votes and a larger percentage of the total vote than the existing county, replace the 'largest' variables.
         if (county_ballots > largest_turnout_ballots) and (county_percentage > largest_turnout_percentage):
             largest_turnout_ballots = county_ballots
             largest_turnout_county = county_name
             largest_turnout_percentage = county_percentage
+
+    #Print off the entry (county) that is assigned to the largest turnout variable after the loop is finished
+    print(largest_turnout_county)
 ```
 
 - **Question: Provide a breakdown of the number of votes and the percentage of the total votes each candidate received.**
