@@ -29,8 +29,10 @@ To conduct analysis we used Jupyter Notebook as an IDE and Python 3.7.6 for a co
 ![Congressional Election Results and Participation](https://github.com/MaureenFromuth/Election_Analysis_Challenge/blob/master/Election_Results-Text.png)
 
 
-- Question: How many votes were cast in this congressional election?
-*Answer: 376,711*
+- **Question: How many votes were cast in this congressional election?**
+
+        Answer: 376,711
+
 To determine the total number of votes (or ballots) cast within this congressional election, we itialized a variable 'total_votes' to count the total votes and set it equal to 0.  After opening the election_results.csv data, we utilized a 'for' loop to move through each vote (row), adding an additional count to the total_votes.  
 ```
 #Election_results data
@@ -61,5 +63,4 @@ Which candidate won the election, what was their vote count, and what was their 
 
 
 ## Summary
-
 
