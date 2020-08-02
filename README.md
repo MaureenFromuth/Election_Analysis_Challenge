@@ -60,23 +60,20 @@ with open(file_to_load) as election_data:
 - **Question: Provide a breakdown of the number of votes and the percentage of total votes for each county in the precinct.**
 
         Answer: Jefferson: 10.5% (38,855); Denver: 82.8% (306,055); Arapahoe: 6.7% (24,801)
-To assess the overall particpation of each county, we utilized created one list, one dictionary, and 3 new variables.  The list established the name of the counties that there were ballots cast, whereas the dictionary established the number of votes per county (key).  The three remaining variables identified the county with the largest turn out, the number of votes in that county, and the percentage of overall votes that county had.  Employing a conditional statement within a for loop that reviewed each row, the code looks for a county not alreaedy in the county names list.  If it is a new county, the code appends the count names list and adds that name, setting the count of votes from that county equal to 0.  Outside of the conditional statement but within the same for loop, every time a county appears on a row another count is added to the total number of ballots from that county.  This gives us the names of all the counties from which we had votes as well as the information needed for the dictionary pairing total number of ballots to the county (key).   
+
+To assess the overall particpation of each county, we utilized created one list and one dictionary.  The list established the name of the counties that there were ballots cast, whereas the dictionary established the number of votes per county (key).  
+
 ```
 #Establish a list for all the counties from which a vote came from
 county_list = []
 
 #Establish a dictionary for number of votes (key) per county
 county_votes = {}
+```
 
-#Establish a variable for the name of the county with the largest turnout
-largest_turnout_county = ""
+Employing a conditional statement within a for loop that reviewed each row, the code looks for a county not alreaedy in the county names list.  If it is a new county, the code appends the count names list and adds that name, setting the count of votes from that county equal to 0.  Outside of the conditional statement but within the same for loop, every time a county appears on a row another count is added to the total number of ballots from that county.  This gives us the names of all the counties from which we had votes as well as the information needed for the dictionary pairing total number of ballots to the county (key).   
 
-#Establish a variable for the number of ballots (or votes) associated with the county with the largest turnout
-largest_turnout_ballots = 0
-
-#Establish a variable for the percentage of total votes (or ballots) cast that came from the county with the largest turn out  
-largest_turnout_percentage = 0
-
+```
 with open(file_to_load) as election_data:
     reader = csv.reader(election_data)
     header = next(reader)
@@ -112,7 +109,28 @@ Once these new lists are appended and counted, we used another for loop to conso
 
 - **Question: Which county had the largest number of votes?**
 
+        Answer: Denver 
+
+To determine the county with the largest number of votes and therefore the largest voter turn out, we first established the three new variables.  These variables identified the county with the largest turn out, the number of votes in that county, and the percentage of overall votes that county had.  
+
 ```
+#Establish a variable for the name of the county with the largest turnout
+largest_turnout_county = ""
+
+#Establish a variable for the number of ballots (or votes) associated with the county with the largest turnout
+largest_turnout_ballots = 0
+
+#Establish a variable for the percentage of total votes (or ballots) cast that came from the county with the largest turn out  
+largest_turnout_percentage = 0
+```
+
+we used a conditional statement that referenced three additional variables .  This conditional statement was within the loop that looked through the dictionary of counties (row/key) and their total votes (variable).  For each county, the conditional statement looked for two conditions to be true: that county had MORE THAN the existing 
+
+```
+        if (county_ballots > largest_turnout_ballots) and (county_percentage > largest_turnout_percentage):
+            largest_turnout_ballots = county_ballots
+            largest_turnout_county = county_name
+            largest_turnout_percentage = county_percentage
 ```
 
 - **Question: Provide a breakdown of the number of votes and the percentage of the total votes each candidate received.**
